@@ -97,7 +97,8 @@ int main(int argc, char **argv) {
   if (argc != 2)
     error("%s: invalid number of arguments", argv[0]);
 
-  Token *tok = tokenize(argv[1]);
+  Token *tok, *all_tokens;
+  tok = all_tokens = tokenize(argv[1]);
 
   printf("  .globl main\n");
   printf("main:\n");
@@ -120,5 +121,11 @@ int main(int argc, char **argv) {
   }
 
   printf("  ret\n");
+
+  while (all_tokens) {
+      Token *tok = all_tokens;
+      all_tokens = all_tokens->next;
+      free(tok);
+  }
   return 0;
 }
